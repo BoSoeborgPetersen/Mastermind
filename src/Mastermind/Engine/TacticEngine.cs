@@ -1,42 +1,49 @@
-﻿using Mastermind.ViewModel;
+﻿namespace Mastermind.Engine;
 
-namespace Mastermind.Engine;
-
-public class TacticEngine
+public class TacticEngine(AppConfig _appConfig, Random _rand)
 {
-    readonly AppConfig appConfig;
-    readonly Random rand = new();
+    public int ActiveBidIndex { get; set; }
 
-    public TacticEngine(AppConfig _appConfig, Random _rand)
+    public void ProcessRow(GameBoardVM gb)
     {
-        appConfig = _appConfig;
-        rand = _rand;
-    }
+        BidVM ActiveBid = gb.Bids.ElementAtOrDefault(ActiveBidIndex);
+        AnswerVM ActiveAnswer = gb.Answers.ElementAtOrDefault(ActiveBidIndex);
 
-    public void CreateSolution(GameBoardVM _gameBoard) => _gameBoard.Solution.Fields.ForEach(f => f.Value = rand.Next(appConfig.FieldColors.Count));
-
-    public void SolveRow(GameBoardVM _gameBoard)
-    {
-        int fieldColorCount = appConfig.ColorCount;
-        List<int> usedPositions = new();
+        int fieldColorCount = _appConfig.ColorCount;
+        List<int> usedPositions = [];
         int c = 0;
-        foreach (FieldVM f in _gameBoard.ActiveBid.Fields.Where(x => _gameBoard.Solution.Fields.ElementAt(x.Index).Value == x.Value))
+        foreach (var f in ActiveBid.Fields.Where(x => gb.Solution.Fields[x.Index].Value == x.Value))
         {
-            _gameBoard.ActiveAnswer.Fields.ElementAt(c++).Value = 2;
+            ActiveAnswer.Fields[c++].Value = 2;
             usedPositions.Add(f.Index);
         }
 
-        FieldVM i;
-        foreach (FieldVM f in _gameBoard.ActiveBid.Fields.Where(x => _gameBoard.Solution.Fields.ElementAt(x.Index).Value != x.Value))
+        BidFieldVM i;
+        foreach (var f in ActiveBid.Fields.Where(x => gb.Solution.Fields[x.Index].Value != x.Value))
         {
-            i = _gameBoard.Solution.Fields.Where(y => !usedPositions.Contains(y.Index)).Where(y => y.Value == f.Value).FirstOrDefault();
+            i = gb.Solution.Fields.Find(y => !usedPositions.Contains(y.Index) && y.Value == f.Value);
             if (i != null)
             {
-                _gameBoard.ActiveAnswer.Fields.ElementAt(c++).Value = 1;
+                ActiveAnswer.Fields[c++].Value = 1;
                 usedPositions.Add(i.Index);
             }
         }
-        if (_gameBoard.ActiveAnswer.Fields.All(x => x.Value == 2)) _gameBoard.Solved();
-        if (_gameBoard.ActiveBidIndex == 0) _gameBoard. Failed();
+
+        if (ActiveAnswer.Fields.All(x => x.Value == 2)) gb.IsSolved = true;
+        if (ActiveBidIndex == 0) gb.IsFailed = true;
+
+        ActiveBidIndex--;
+        ActiveBid = gb.Bids.ElementAtOrDefault(ActiveBidIndex);
+        if (ActiveBid != null) ActiveBid.IsCurrent = true;
+    }
+
+    public void New(GameBoardVM gb)
+    {
+        gb.Solution ??= new BidVM(_appConfig, false, -1);
+        gb.Bids = Enumerable.Range(0, _appConfig.RowCount).Select(i => new BidVM(_appConfig, i == _appConfig.RowCount - 1, _appConfig.RowCount - i)).ToList();
+        gb.Answers = Enumerable.Range(0, _appConfig.RowCount).Select(_ => new AnswerVM(_appConfig)).ToList();
+        ActiveBidIndex = _appConfig.RowCount - 1;
+        gb.IsSolved = gb.IsFailed = false;
+        gb.Solution.Fields.ForEach(f => f.Value = _rand.Next(_appConfig.FieldColors.Count));
     }
 }

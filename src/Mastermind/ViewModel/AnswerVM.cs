@@ -1,13 +1,6 @@
 ﻿namespace Mastermind.ViewModel;
 
-public class AnswerVM
+public class AnswerVM(AppConfig _appConfig)
 {
-    public GameBoardVM GameBoard { get; init; }
-    public List<AnswerFieldVM> Fields { get; init; }
-
-    public AnswerVM(AppConfig _appConfig, GameBoardVM _gameBoard)
-    {
-        GameBoard = _gameBoard;
-        Fields = Enumerable.Range(0, _appConfig.FieldCount).Select(i => new AnswerFieldVM(_appConfig, this, 0)).ToList();
-    }
+    public List<AnswerFieldVM> Fields { get; init; } = Enumerable.Range(0, _appConfig.FieldCount).Select(_ => new AnswerFieldVM(_appConfig)).ToList();
 }

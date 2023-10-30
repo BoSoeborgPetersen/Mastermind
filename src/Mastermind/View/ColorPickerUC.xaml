@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Mastermind.View.ColorPickerUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:Mastermind.ViewModel">
+    <Border Margin="10" Background="Sienna">
+        <ItemsControl ItemsSource="{x:Bind VM.ColorOptions}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:ColorPickerFieldVM">
+                    <Grid Margin="10" PointerReleased="{x:Bind Selected}">
+                        <Ellipse Width="20" Height="20" Fill="Black"/>
+                        <Ellipse Width="40" Height="40" StrokeThickness="2" Stroke="{x:Bind BorderColor}" Fill="{x:Bind Color}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Border>
+</UserControl>

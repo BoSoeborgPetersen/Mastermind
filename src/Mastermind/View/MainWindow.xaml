@@ -1,62 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Window
-    x:Class="Mastermind.View.MainWindow"
+﻿<Window x:Class="Mastermind.View.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:v="using:Mastermind.View"
-    xmlns:vm="using:Mastermind.ViewModel"
-    mc:Ignorable="d">
-    <Grid x:Name="Root">
-        <Grid.DataContext>
-            <vm:MainVM />
-        </Grid.DataContext>
+    xmlns:v="using:Mastermind.View">
+    <Grid x:Name="Root" ColumnDefinitions="*, auto, 80, *">
         <Grid.Background>
             <ImageBrush ImageSource="/Image/Table.jpg"/>
         </Grid.Background>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="80"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
-        <Image Source="/Image/Coffee.png" MaxWidth="300" VerticalAlignment="Top" Margin="20"/>
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <v:GameBoardUC Grid.Row="1" DataContext="{Binding GameBoard}"/>
-        </Grid>
+        <Image Source="/Image/Coffee.png" MaxWidth="300" Margin="20" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <v:GameBoardUC Grid.Column="1" VM="{x:Bind VM.GameBoard}" VerticalAlignment="Center"/>
+        <v:ColorPickerUC Grid.Column="2" VM="{x:Bind VM.ColorPicker}" Visibility="{x:Bind VM.ColorPicker.Show, Mode=OneWay}" VerticalAlignment="Center"/>
         <Grid Grid.Column="3">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <v:ColorsUC Grid.Row="1" DataContext="{Binding ChooseColor}" Visibility="{Binding ShowChooseColor}"/>
-        </Grid>
-        <Grid Grid.Column="5">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <Image Grid.Row="1" Source="/Image/Notepad.png" MaxWidth="500" VerticalAlignment="Bottom" Margin="20"/>
-            <StackPanel Grid.Row="1" Margin="85, 80, 10, 50" Padding="10, 0, 0, 0" MaxWidth="391" Background="Cornsilk">
+            <Image Source="/Image/Notepad.png" MaxWidth="500" Margin="20" VerticalAlignment="Bottom" />
+            <StackPanel Grid.Column="3" Margin="85, 0, 10, 40" Padding="10, 40, 0, 100" MaxWidth="391" Background="Cornsilk" VerticalAlignment="Bottom">
                 <TextBlock Foreground="Black" FontSize="20" TextWrapping="Wrap">
-                    <Bold>Mastermind</Bold> is a game about determining the color combination of the code. <LineBreak/>
-                    (which includes missing and reoccuring colors).<LineBreak/><LineBreak/>
-                    The game works by:<LineBreak/>
-                    1. Pick a hole in the active row (starting from the bottom).<LineBreak/>
-                    2. Choose a color in the color picker, which is now visible to the right.<LineBreak/>
-                    3. Confirm your choice, with the green check mark<LineBreak/><LineBreak/>
-                    Helper pins (left side):<LineBreak/>
-                    - Black pin: Correct color and position.<LineBreak/>
-                    - White pin: Correct color, wrong position.
+                <Bold>Mastermind</Bold> is a game about determining the color combination of the code. <LineBreak/>
+                (which includes missing and reoccuring colors).<LineBreak/><LineBreak/>
+                The game works by:<LineBreak/>
+                1. Pick a hole in the active row (starting from the bottom).<LineBreak/>
+                2. Choose a color in the color picker, which is now visible to the right.<LineBreak/>
+                3. Confirm your choice, with the green check mark<LineBreak/><LineBreak/>
+                Helper pins (left side):<LineBreak/>
+                - Black pin: Correct color and position.<LineBreak/>
+                - White pin: Correct color, wrong position.
                 </TextBlock>
             </StackPanel>
         </Grid>

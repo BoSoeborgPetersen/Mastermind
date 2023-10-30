@@ -1,28 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<UserControl
-    x:Class="Mastermind.View.AnswerUC"
+﻿<UserControl x:Class="Mastermind.View.AnswerUC"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:Mastermind.ViewModel"
-    d:DataContext="{d:DesignInstance Type=vm:AnswerVM}"
-    mc:Ignorable="d"
-    d:DesignHeight="50"
-    d:DesignWidth="100">
-    <ItemsControl ItemsSource="{Binding Fields}">
+    xmlns:vm="using:Mastermind.ViewModel">
+    <ItemsControl ItemsSource="{x:Bind VM.Fields}">
         <ItemsControl.ItemTemplate>
-            <DataTemplate>
+            <DataTemplate x:DataType="vm:AnswerFieldVM">
                 <Grid>
                     <Ellipse Width="10" Height="10" Margin="5, 20" Fill="Black"/>
-                    <Ellipse Width="20" Height="20" Margin="5, 20" StrokeThickness="1">
-                        <Ellipse.Stroke>
-                            <SolidColorBrush Color="{Binding BorderColor}"/>
-                        </Ellipse.Stroke>
-                        <Ellipse.Fill>
-                            <SolidColorBrush Color="{Binding Color}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
+                    <Ellipse Width="20" Height="20" Margin="5, 20" StrokeThickness="1" Stroke="{x:Bind BorderColor, Mode=OneWay}" Fill="{x:Bind Color, Mode=OneWay}"/>
                 </Grid>
             </DataTemplate>
         </ItemsControl.ItemTemplate>

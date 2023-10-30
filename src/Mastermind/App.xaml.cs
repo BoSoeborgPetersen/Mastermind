@@ -1,32 +1,34 @@
-﻿using Mastermind.View;
-using Microsoft.UI.Xaml;
+﻿namespace Mastermind;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
-namespace Mastermind;
-
-/// <summary>
-/// Provides application-specific behavior to supplement the default Application class.
-/// </summary>
 public partial class App : Application
 {
-    /// <summary>
-    /// Initializes the singleton application object.  This is the first line of authored code
-    /// executed, and as such is the logical equivalent of main() or WinMain().
-    /// </summary>
     public App()
     {
-        this.InitializeComponent();
+        IoC();
+        InitializeComponent();
     }
 
-    /// <summary>
-    /// Invoked when the application is launched.
-    /// </summary>
-    /// <param name="args">Details about the launch request and process.</param>
-    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+    private static void IoC() => Ioc.Default.ConfigureServices(
+            new ServiceCollection()
+                .AddSingleton<AppConfig>()
+                .AddSingleton<Random>()
+                .AddSingleton<TacticEngine>()
+                .AddTransient<MainVM>()
+                .AddTransient<GameBoardVM>()
+                .AddTransient<BidVM>()
+                .AddTransient<BidFieldVM>()
+                .AddTransient<AnswerVM>()
+                .AddTransient<AnswerFieldVM>()
+                .AddTransient<ColorPickerVM>()
+                .AddTransient<ColorPickerFieldVM>()
+                .BuildServiceProvider());
+
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        m_window = new MainWindow();
+        m_window = new MainWindow()
+        {
+            VM = Ioc.Default.GetService<MainVM>()
+        };
         m_window.Activate();
     }
 
