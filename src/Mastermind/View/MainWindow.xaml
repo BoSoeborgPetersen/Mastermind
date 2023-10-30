@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Mastermind.View.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:v="using:Mastermind.View"
+    xmlns:vm="using:Mastermind.ViewModel"
+    mc:Ignorable="d">
+    <Grid x:Name="Root">
+        <Grid.DataContext>
+            <vm:MainViewModel />
+        </Grid.DataContext>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Image/Table.jpg"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="/Image/Coffee.png" MaxWidth="300" VerticalAlignment="Top" Margin="20"/>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <v:GameBoardUC Grid.Row="1" DataContext="{Binding GameBoard}"/>
+        </Grid>
+        <Grid Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <v:ColorsUC Grid.Row="1" DataContext="{Binding Colors}" Visibility="{Binding Visibility}"/>
+        </Grid>
+        <Grid Grid.Column="5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="1" Source="/Image/Notepad.png" MaxWidth="500" VerticalAlignment="Bottom" Margin="20"/>
+            <StackPanel Grid.Row="1" Margin="90, 80, 10, 50" MaxWidth="360" Background="Cornsilk">
+                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
+                    MasterMind går ud på at finde ud af hvilke farver der er brugt i løsningen (der kan være manglende og dobbelte farver).
+                </TextBlock>
+                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
+                    Spillet fungere ved at man:
+                </TextBlock>
+                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
+                    1. Vælger et hul i den aktive række.
+                </TextBlock>
+                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
+                    2. Vælger en farve i farvepanellet, der nu er synligt.
+                </TextBlock>
+                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
+                    3. Godkender rækken, med det grønne hak.
+                </TextBlock>
+                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
+                    (4. Spillet genstartes med symbolet der har en rund sort pil på hvidt.
+                </TextBlock>
+                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
+                    Resultatfarverne betyder:
+                </TextBlock>
+                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
+                    Ved sort at en af farverne er rigtig og rigtigt placeret.
+                </TextBlock>
+                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
+                    Ved hvid at en af farverne er rigtig men forkert placeret.
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

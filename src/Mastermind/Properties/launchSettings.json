@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Mastermind (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Mastermind (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
