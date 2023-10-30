@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:Mastermind.Model"
-    d:DataContext="{d:DesignInstance Type=model:Row}"
+    xmlns:vm="using:Mastermind.ViewModel"
+    d:DataContext="{d:DesignInstance Type=vm:RowVM}"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="400">
@@ -18,17 +18,23 @@
         <ItemsControl ItemsSource="{Binding Fields}" IsEnabled="{Binding IsActive}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Ellipse Width="20" Height="20" Fill="Black" Margin="10"/>
-                        <Ellipse Width="40" Height="40" Margin="10" StrokeThickness="2" ><!--PointerReleased="Ellipse_PointerReleased_1"-->
-                            <Ellipse.Stroke>
-                                <SolidColorBrush Color="{Binding FieldAsBorderColor}"/>
-                            </Ellipse.Stroke>
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="{Binding FieldAsColor}"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                    </Grid>
+                    <Button BorderBrush="Transparent" Command="{Binding FieldSelectedCommand}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Ellipse Width="20" Height="20" Fill="Black" Margin="10"/>
+                                    <Ellipse Width="40" Height="40" Margin="10" StrokeThickness="2">
+                                        <Ellipse.Stroke>
+                                            <SolidColorBrush Color="{Binding FieldAsBorderColor}"/>
+                                        </Ellipse.Stroke>
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush Color="{Binding FieldAsColor}"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>
@@ -40,7 +46,7 @@
         <Grid Grid.Column="1" Width="60">
             <TextBlock Text="{Binding Number}" FontSize="46" FontWeight="Bold" Foreground="SaddleBrown" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Border Background="Sienna" Visibility="{Binding IsActive}">
-                <Button BorderBrush="Transparent" Width="60" Height="60" ><!--Click="Button_Click_1"-->
+                <Button BorderBrush="Transparent" Width="60" Height="60" Command="{Binding BidConfirmedCommand}" >
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="RootElement" CornerRadius="10" BorderThickness="2">

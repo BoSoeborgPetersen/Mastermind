@@ -5,9 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:Mastermind.ViewModel"
     xmlns:v="using:Mastermind.View"
-    d:DataContext="{d:DesignInstance Type=vm:GameBoardViewModel}"
+    xmlns:vm="using:Mastermind.ViewModel"
+    d:DataContext="{d:DesignInstance Type=vm:GameBoardVM}"
     mc:Ignorable="d"
     d:DesignHeight="800"
     d:DesignWidth="400">
@@ -21,7 +21,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Content="Ny" BorderBrush="Transparent" Width="120" Height="120" Command="{Binding NewCommand}" ><!--Click="Button_Click_1"-->
+        <Button Content="Ny" BorderBrush="Transparent" Width="120" Height="120" Command="{Binding NewCommand}" >
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="RootElement" CornerRadius="10" BorderThickness="2">
@@ -44,14 +44,14 @@
         <ItemsControl Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Answers}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <v:AnswerUC Margin="10"/>
+                    <v:AnswerUC Height="60" Margin="2"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <ItemsControl Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Bids}" Name="BidsTemplate">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <v:RowUC Margin="10"/>
+                    <v:RowUC Height="60" Margin="2"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

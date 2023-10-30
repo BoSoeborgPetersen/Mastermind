@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:Mastermind.Model"
-    d:DataContext="{d:DesignInstance Type=model:Answer}"
+    xmlns:vm="using:Mastermind.ViewModel"
+    d:DataContext="{d:DesignInstance Type=vm:AnswerVM}"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="100">
@@ -17,10 +17,10 @@
                     <Ellipse Width="10" Height="10" Margin="5, 20" Fill="Black"/>
                     <Ellipse Width="20" Height="20" Margin="5, 20" StrokeThickness="1">
                         <Ellipse.Stroke>
-                            <SolidColorBrush Color="{Binding FieldAsBorderColor}"/>
+                            <SolidColorBrush Color="{Binding BorderColor}"/>
                         </Ellipse.Stroke>
                         <Ellipse.Fill>
-                            <SolidColorBrush Color="{Binding FieldAsColor}"/>
+                            <SolidColorBrush Color="{Binding Color}"/>
                         </Ellipse.Fill>
                     </Ellipse>
                 </Grid>

@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <Grid x:Name="Root">
         <Grid.DataContext>
-            <vm:MainViewModel />
+            <vm:MainVM />
         </Grid.DataContext>
         <Grid.Background>
             <ImageBrush ImageSource="/Image/Table.jpg"/>
@@ -38,7 +38,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <v:ColorsUC Grid.Row="1" DataContext="{Binding Colors}" Visibility="{Binding Visibility}"/>
+            <v:ColorsUC Grid.Row="1" DataContext="{Binding ChooseColor}" Visibility="{Binding ShowChooseColor}"/>
         </Grid>
         <Grid Grid.Column="5">
             <Grid.RowDefinitions>
@@ -46,33 +46,17 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Image Grid.Row="1" Source="/Image/Notepad.png" MaxWidth="500" VerticalAlignment="Bottom" Margin="20"/>
-            <StackPanel Grid.Row="1" Margin="90, 80, 10, 50" MaxWidth="360" Background="Cornsilk">
-                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
-                    MasterMind går ud på at finde ud af hvilke farver der er brugt i løsningen (der kan være manglende og dobbelte farver).
-                </TextBlock>
-                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
-                    Spillet fungere ved at man:
-                </TextBlock>
-                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
-                    1. Vælger et hul i den aktive række.
-                </TextBlock>
-                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
-                    2. Vælger en farve i farvepanellet, der nu er synligt.
-                </TextBlock>
-                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
-                    3. Godkender rækken, med det grønne hak.
-                </TextBlock>
-                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
-                    (4. Spillet genstartes med symbolet der har en rund sort pil på hvidt.
-                </TextBlock>
-                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
-                    Resultatfarverne betyder:
-                </TextBlock>
-                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
-                    Ved sort at en af farverne er rigtig og rigtigt placeret.
-                </TextBlock>
-                <TextBlock Foreground="Black" FontSize="24" TextWrapping="Wrap">
-                    Ved hvid at en af farverne er rigtig men forkert placeret.
+            <StackPanel Grid.Row="1" Margin="85, 80, 10, 50" Padding="10, 0, 0, 0" MaxWidth="391" Background="Cornsilk">
+                <TextBlock Foreground="Black" FontSize="20" TextWrapping="Wrap">
+                    <Bold>Mastermind</Bold> is a game about determining the color combination of the code. <LineBreak/>
+                    (which includes missing and reoccuring colors).<LineBreak/><LineBreak/>
+                    The game works by:<LineBreak/>
+                    1. Pick a hole in the active row (starting from the bottom).<LineBreak/>
+                    2. Choose a color in the color picker, which is now visible to the right.<LineBreak/>
+                    3. Confirm your choice, with the green check mark<LineBreak/><LineBreak/>
+                    Helper pins (left side):<LineBreak/>
+                    - Black pin: Correct color and position.<LineBreak/>
+                    - White pin: Correct color, wrong position.
                 </TextBlock>
             </StackPanel>
         </Grid>

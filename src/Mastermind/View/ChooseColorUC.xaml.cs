@@ -1,8 +1,8 @@
 ﻿namespace Mastermind.View;
 
-public sealed partial class RowUC : UserControl
+public sealed partial class ColorsUC : UserControl
 {
-    public RowUC()
+    public ColorsUC()
     {
         InitializeComponent();
     }
