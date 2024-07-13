@@ -9,25 +9,16 @@ public class TacticEngine(AppConfig _appConfig, Random _rand)
         BidVM ActiveBid = gb.Bids.ElementAtOrDefault(ActiveBidIndex);
         AnswerVM ActiveAnswer = gb.Answers.ElementAtOrDefault(ActiveBidIndex);
 
-        int fieldColorCount = _appConfig.ColorCount;
-        List<int> usedPositions = [];
-        int c = 0;
-        foreach (var f in ActiveBid.Fields.Where(x => gb.Solution.Fields[x.Index].Value == x.Value))
-        {
-            ActiveAnswer.Fields[c++].Value = 2;
-            usedPositions.Add(f.Index);
-        }
-
-        BidFieldVM i;
-        foreach (var f in ActiveBid.Fields.Where(x => gb.Solution.Fields[x.Index].Value != x.Value))
-        {
-            i = gb.Solution.Fields.Find(y => !usedPositions.Contains(y.Index) && y.Value == f.Value);
-            if (i != null)
-            {
-                ActiveAnswer.Fields[c++].Value = 1;
-                usedPositions.Add(i.Index);
-            }
-        }
+        List<BidFieldVM> exactIntersect = ActiveBid.Fields.IntersectBy(gb.Solution.Fields.Select(f => new { f.Value, f.Index }), f => new { f.Value, f.Index }).ToList();
+        // TODO: Fix bug with duplicate colors being removed during key selection.
+        //List<BidFieldVM> intersect = ActiveBid.Fields.Except(exactIntersect).IntersectBy(gb.Solution.Fields.Select(f => f.Value), f => f.Value).ToList();
+        var t1 = ActiveBid.Fields.Except(exactIntersect).Select(f => f.Value);
+        var t2 = gb.Solution.Fields.Except(exactIntersect).Select(f => f.Value);
+        //var intersect = ActiveBid.Fields.Except(exactIntersect).Select(f => f.Value).Union(gb.Solution.Fields.Select(f => f.Value));
+        var intersect = t1.Supersect(t2.ToList());
+        var answer = exactIntersect.Select(_ => 2).Concat(intersect.Select(_ => 1));
+        var i = 0;
+        answer.ToList().ForEach(v => ActiveAnswer.Fields[i++].Value = v);
 
         if (ActiveAnswer.Fields.All(x => x.Value == 2)) gb.IsSolved = true;
         if (ActiveBidIndex == 0) gb.IsFailed = true;
